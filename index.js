@@ -1,15 +1,22 @@
-const express = require("express");
+const express = require("express")
+const port = 4000
+const app = express()
 
-const app = express();
+app.use(express.json())
 
-const songs = require("./routes/songs");
+//Importando routers
+const songs = require("./routes/songs")
+const auth = require("./routes/auth")
 
-songs(app);
+songs(app)
+auth(app)
 
 app.get("/", (req, res) => {
-  return res.json({ hola: "mundo" });
-});
+  return res.json({
+    hola: "mundo"
+  })
+})
 
-app.listen(4000, () => {
-  console.log("Listening on port : http://localhost:4000");
-});
+app.listen(port, () => {
+  console.log("Listening on: http://localhost:" + port)
+})
