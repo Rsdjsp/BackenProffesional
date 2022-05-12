@@ -48,7 +48,7 @@ class Auth {
       message: "Credenciales incorrectas. Verificar.",
     };
 
-    //Investigar HTTP Only Cookies
+   
   }
 
   createToken(data) {

@@ -4,10 +4,10 @@ const Auth = require("../services/auth")
 
 function auth(app) {
     const router = express.Router()
+    app.use("/auth", router)
 
     const authService = new Auth()
 
-    app.use("/auth", router)
 
     router.post("/login", async (req, res) => {
 
