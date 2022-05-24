@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: users
+spec:
+  containers:
+    - name: postgresdb
+      image: postgres
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: "12345"
+        - name: POSTGRES_DB
+          value: "users"
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+      ports:
+        - containerPort: 5432
+          protocol: TCP
+    - name: users
+      image: users-micro
+      imagePullPolicy: Never
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "128Mi"
+        limits:
+          cpu: "1000m"
+          memory: "512Mi"
+      ports:
+        - containerPort: 4000
+          name: http
+          protocol: TCP
+      env:
+        - name: PORT
+          value: "4000"
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 4000
+        initialDelaySeconds: 5
+        timeoutSeconds: 1
+        periodSeconds: 10
+        failureTreshold: 3

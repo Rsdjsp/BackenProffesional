@@ -22,7 +22,7 @@ router.put("/:id", async (req, res) => {
   return res.json(users);
 });
 router.delete("/:id", async (req, res) => {
-  const users = await userMicroServ.geALL(req.params.id,req.body);
+  const users = await userMicroServ.delete(req.params.id,req.body);
   return res.json(users);
 });
 

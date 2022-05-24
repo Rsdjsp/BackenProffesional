@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgresdb
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=users
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+
+  users-micro:
+    container_name: users-micro
+    build: .
+    environment:
+      - PORT=4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgresdb
